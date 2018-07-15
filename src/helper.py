@@ -17,7 +17,7 @@ def command_line_parser():
 def get_data(filename):
     data = {}
     with open(filename, 'r') as fobj:
-        next(fobj)
+        next(fobj) # skip first line!
         lines = fobj.readlines()
         for line in lines:
             id, last_name, first_name, drug_name, drug_cost = line.strip().split(',')
