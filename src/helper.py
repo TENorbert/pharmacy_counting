@@ -14,6 +14,20 @@ def command_line_parser():
     return vars(ap.parse_args())
 
 
+def get_data(filename):
+    data = {}
+    with open(filename, 'r') as fobj:
+        next(fobj)
+        lines = fobj.readlines()
+        for line in lines:
+            id, last_name, first_name, drug_name, drug_cost = line.strip().split(',')
+            drug_properties = (id, last_name, first_name, drug_cost)
+            data[drug_name] = list(drug_properties)
+    return data
+
+
+
+
 
 def read_input_data(input_filename):
     """Reads data from file into list"""

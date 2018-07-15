@@ -19,7 +19,13 @@ def main():
 
         print_lines(data)
 
-        write_output_data(data, output_file)
+        #write_output_data(data, output_file)
+
+        data_dict = get_data(input_file)
+        for key in data_dict.keys():
+            print(str(key) + " : " + str(data_dict[key]))
+
+
 
     except IOError:
         print('main cannot run!')
