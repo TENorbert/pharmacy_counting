@@ -21,8 +21,8 @@ def get_data(filename):
         lines = fobj.readlines()
         for line in lines:
             id, last_name, first_name, drug_name, drug_cost = line.strip().split(',')
-            drug_properties = (id, last_name, first_name, drug_cost)
-            data[drug_name] = list(drug_properties)
+            drug_properties = (last_name, first_name, drug_name, drug_cost)
+            data[id] = list(drug_properties)
     return data
 
 
