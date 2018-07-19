@@ -135,10 +135,6 @@ def write_pharmacy_counting(drug_costs, unique_drug_prescribers,output_file):
 
     print("\n")
     '''
-    #TO DO:
-    # -- Write output in DESCENDING drug PRICE
-    # -- If Same Price, in alphabet order of drug name!
-
     try:
         fhandle = open(output_file, 'w')
         fhandle.write("drug_name , num_prescriber, total_cost \n")

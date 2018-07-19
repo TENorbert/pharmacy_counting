@@ -40,10 +40,6 @@ def main():
 
         write_pharmacy_counting(drug_costs, unique_prescriber_names, output_file)
 
-        #TO DO:
-         # -- Write output in DESCENDING drug PRICE
-         # -- If Same Price, in alphabet order of drug name!
-
     except IOError:
         print('main cannot run!')
 
