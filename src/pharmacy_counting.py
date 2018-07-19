@@ -5,7 +5,7 @@ import os, sys, re
 
 from helper import command_line_parser, \
     get_data_lines,extract_drug_properties,\
-    compute_drug_outputs,print_drug_output
+    compute_drug_outputs,write_pharmacy_counting
 
 
 def main():
@@ -38,7 +38,7 @@ def main():
                              drug_prescriber_list,\
                              unique_prescriber_names, drug_costs)
 
-        print_drug_output(drug_costs, unique_prescriber_names)
+        write_pharmacy_counting(drug_costs, unique_prescriber_names, output_file)
 
     except IOError:
         print('main cannot run!')
