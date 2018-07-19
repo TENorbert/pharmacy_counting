@@ -141,12 +141,15 @@ def write_pharmacy_counting(drug_costs, unique_drug_prescribers,output_file):
 
     try:
         fhandle = open(output_file, 'w')
-        fhandle.write("drug_name , num_prescriber, total_cost \n")
+        fhandle.write("drug_name,num_prescriber,total_cost \n")
 
         if len(drugs_from_drug_costs) == len(drugs_from_unique_drug_prescribers):
-            for drug in drug_costs.keys():
+            drug_keylist = drug_costs.keys()
+            #drug_keylist.sort() # sort by drug name alphabet!
+            for drug in drug_keylist:
                 if drug in unique_drug_prescribers.keys():
                     total_drug_cost = get_sum(drug_costs[drug])
+                    total_drug_cost = int(total_drug_cost)
                     prescriber_count = len(unique_drug_prescribers[drug])
 
                     fhandle.write(drug + "," + str(prescriber_count) + "," + str(total_drug_cost) + "\n")
@@ -168,12 +171,10 @@ def  get_sum(cost_list):
     :param cost_list:
     :return: sum_total
     """
-    total_cost = 0
+    total_cost = 0.0
     try:
         for cost in cost_list:
-            #total_cost += float(cost)
-            total_cost += int(cost)
-
+            total_cost += float(cost)
         return total_cost
 
     except Exception as e:
