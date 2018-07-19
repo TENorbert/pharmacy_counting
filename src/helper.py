@@ -64,22 +64,14 @@ def extract_drug_properties(lines):
             drug_name_list.append(drug_name)
             drug_cost_list.append(drug_cost)
             drug_prescriber_list.append(prescriber_name)
-            """
-                #For given drug_name:
-                   # check if drug_name_already exist: search(drug_name,drug_name_list)
-                      # Check if prescriber already exist: search(drug_name,
-                        # if prescriber already exists: increase cost and number_of_prescribers
-                        # else: Add new prescriber and cost to drug_data dict by drug_name
-                #drug_data[drug_name].add((unique_prescriber_name_list, unique_drug_cost_list))
-            """
 
     return drug_name_list, drug_cost_list, drug_prescriber_list
 
 
 
-def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,unique_prescriber_name, drug_costs):
+def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,unique_prescriber_names, drug_costs):
     """
-    Computes drug properties:
+        Computes drug properties(Total cost, Number of Prescribers) using set and list DS:
     :param drug_name_list:
     :param drug_cost_list:
     :param drug_prescriber_list:
@@ -100,24 +92,30 @@ def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,un
         print('Drug Cost = %s' %item)
     '''
 
+    """
+        # Big Idea!
+        #For given drug_name:
+           # check if drug_name_already exist: search(drug_name,drug_name_list)
+              # Check if prescriber already exist: search(drug_name,
+                # if prescriber already exists: increase cost and number_of_prescribers
+                # else: Add new prescriber and cost to drug_data dict by drug_name
+        #drug_data[drug_name].add((unique_prescriber_name_list, unique_drug_cost_list))
+    """
+
     for drug, prescriber in zip(drug_name_list, drug_prescriber_list):
         print('Drug = %s & Drug Prescriber = %s' % (drug, prescriber))
-        if prescriber not in unique_prescriber_name:
-            unique_prescriber_name[drug] = set() ## makes prescriber unique
-        unique_prescriber_name[drug].add(prescriber)
+        if drug not in unique_prescriber_names:
+            unique_prescriber_names[drug] = set() # unique prescriber unique
+        unique_prescriber_names[drug].add(prescriber)
 
 
 
     ## Get list of drug cost for each drug
     for drug, cost in zip(drug_name_list, drug_cost_list):
         print('Drug = %s & Drug Cost = %s' % (drug,cost))
-        if cost not in drug_costs: ## do I really need this?
-            drug_costs[drug] = list() # list of costs
+        if drug not in drug_costs:
+            drug_costs[drug] = list() # multiple costs!
         drug_costs[drug].append(cost)
-
-
-
-    #return drug_costs, unique_prescriber_name
 
 
 
@@ -134,12 +132,12 @@ def print_drug_output(drug_costs, unique_drug_prescribers):
     print("length of drug cost = {} & length of unique prescribers = {}\n"\
         .format(len(drugs_from_drug_costs),len(drugs_from_unique_drug_prescribers)))
 
-    print("Drug Costs-----")
+    print("-----Drug Costs-----")
     for key, value in drug_costs.items():
         print("Key = {}, Value = {}".format(key, value))
     print("\n")
 
-    print("Drug Prescribers------")
+    print("-----Drug Prescribers------")
     for key, value in unique_drug_prescribers.items():
         print("Key = {}, Value = {}".format(key, value))
 
