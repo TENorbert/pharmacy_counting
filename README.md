@@ -29,14 +29,14 @@ In order to generate a list of drugs with the following constraints:
 
   - Now using a class object called Drug to represent: drug name, Unique Prescriber count, Total cost
   where
-    a)Total Cost is sum of all costs made by all the prescribers associated to a given drug name.
-    b) Total Unique count of all Prescriber associated with the same drug name as (a)
+    _a)Total Cost is sum of all costs made by all the prescribers associated to a given drug name.
+    _b) Total Unique count of all Prescriber associated with the same drug name as (a)
 
      - i.e class Drug:
              - Properties: drug name, Prescriber count, Total cost
              - Methods: override less than, greater than and __compare__
 
-    Class __Drug__(object):
+    [*]Class __Drug__(object):
             _ properties__:(drug_name, prescriber_count, total_cost)
             _ methods:(lt,gt,compare)
 
