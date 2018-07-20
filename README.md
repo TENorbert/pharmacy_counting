@@ -1,6 +1,6 @@
 
-# Solution to Insight Pharmacy Counting Problem.
-  Pharmacy counting problem is defined here:
+# Solution to Pharmacy Counting Problem.
+  The Pharmacy counting problem is defined here:
   https://github.com/InsightDataScience/pharmacy_counting
 
 # Solution Approach
@@ -8,13 +8,13 @@ In order to generate a list of drugs with the following constraints:
  - The drug name,
  - The total number of UNIQUE drug Prescribers,
  - The total drug cost,
- - Listed in descending order:
-    1) Based on the total drug cost
-    2) The drug name(if there is a tie in Total Drug Cost)
+ - Listed in descending order of:
+    1) The total drug cost,
+    2) The drug name(if there is a tie in total drug cost).
 
-  I used three notions: Data structures and Algorithms and Classes.
+  I used three concepts: Data Structures and Algorithms and Classes.
 
- # Implememntation
+ # Implementation
  I approached the implementing the solution in the following ways:
   - Use list data structures to store individual drug properties like: drug name, cost,
      prescriber full name.
@@ -28,21 +28,15 @@ In order to generate a list of drugs with the following constraints:
      dictionary of lists for drug name-to-prescriber full name mapping.
 
   - Now using a class object called Drug to represent: drug name, Unique Prescriber count, Total cost
-  where
-    _a)Total Cost is sum of all costs made by all the prescribers associated to a given drug name.
-    _b) Total Unique count of all Prescriber associated with the same drug name as (a)
+  where:
+    - a)Total Cost is sum of all costs made by all the prescribers associated to a given drug name.
+    - b)Total Unique count of all Prescriber associated with the same drug name as (a)
 
-     - i.e class Drug:
+    - i.e Class __Drug__(object):
 
-             - Properties: drug name, Prescriber count, Total cost
+                - __properties__:(drug_name, prescriber_count, total_cost)
 
-             - Methods: override less than, greater than and __compare__
-
-    Class __Drug__(object):
-
-            - properties__:(drug_name, prescriber_count, total_cost)
-
-            - methods:(lt,gt,compare)
+                - __methods__:(__lt__,__gt__,__compare__)
 
   - Each drug which is an instance of class Drug is stored in a list
   - Using the __Compare__ method we can sort(in terms of Total Cost and Drug Name) the drugs in the list thus:
