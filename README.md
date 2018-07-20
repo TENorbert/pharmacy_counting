@@ -32,11 +32,11 @@ In order to generate a list of drugs with the following constraints:
     - a)Total Cost is sum of all costs made by all the prescribers associated to a given drug name.
     - b)Total Unique count of all Prescriber associated with the same drug name as (a)
 
-    - i.e Class __Drug__(object):
+    i.e Class __Drug__(object):
 
-                - __properties__:(drug_name, prescriber_count, total_cost)
+                - Properties:(drug_name, prescriber_count, total_cost)
 
-                - __methods__:(__lt__,__gt__,__compare__)
+                - Methods:(__lt__, __gt__, compare)
 
   - Each drug which is an instance of class Drug is stored in a list
   - Using the __Compare__ method we can sort(in terms of Total Cost and Drug Name) the drugs in the list thus:
