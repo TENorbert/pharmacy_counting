@@ -14,7 +14,7 @@ In order to generate a list of drugs with the following constraints:
 
   I used three notions: Data structures and Algorithms and Classes.
 
- #Implememntation
+ # Implememntation
  I approached the implementing the solution in the following ways:
   - Use list data structures to store individual drug properties like: drug name, cost,
      prescriber full name.
@@ -33,12 +33,16 @@ In order to generate a list of drugs with the following constraints:
     _b) Total Unique count of all Prescriber associated with the same drug name as (a)
 
      - i.e class Drug:
+
              - Properties: drug name, Prescriber count, Total cost
+
              - Methods: override less than, greater than and __compare__
 
-    [*]Class __Drug__(object):
-            _ properties__:(drug_name, prescriber_count, total_cost)
-            _ methods:(lt,gt,compare)
+    Class __Drug__(object):
+
+            - properties__:(drug_name, prescriber_count, total_cost)
+
+            - methods:(lt,gt,compare)
 
   - Each drug which is an instance of class Drug is stored in a list
   - Using the __Compare__ method we can sort(in terms of Total Cost and Drug Name) the drugs in the list thus:
