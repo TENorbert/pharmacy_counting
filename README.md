@@ -36,17 +36,12 @@ In order to generate a list of drugs with the following constraints:
              --Properties: drug name, Prescriber count, Total cost
              --Methods: override less than, greater than and compare
 
-    Class Drug(object)
-              ├──properties:--├── drug_name
-              |               ├── prescriber_count
-              |               ├── total_cost
-              |
-              ├──Mathods:--├── __lt__
-                           ├── __gt__
-                           ├── __compare
+    Class __Drug(object):
+            __properties__:(drug_name, prescriber_count, total_cost)
+            __methods:(lt,gt,compare)
 
   - Each drug which is an instance of class Drug is stored in a list
-  - Using the *Compare* method we can sort(in terms of Total Cost and Drug Name) the drugs in the list thus:
+  - Using the __Compare__ method we can sort(in terms of Total Cost and Drug Name) the drugs in the list thus:
     thus addressing the constraints of descending order.
 
   - Finally the properties(drug name, Unique Prescriber count, Total Cost) of the sorted list of Drugs
@@ -56,7 +51,7 @@ In order to generate a list of drugs with the following constraints:
   # Future Improvements
   - One could use better sorting algorithms like quick sort to improve performance
   - Instead of passing list and dictionaries( particularly for such large datasets),
-   using *hash maps* or *Redis*(key-value data structure server) could be used as
+   using __hash maps__ or __Redis__(key-value data structure server) could be used as
     these have high performance and are more scalable.
 
 
