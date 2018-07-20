@@ -1,19 +1,15 @@
 #!/user/bin/python
 
 from argparse import ArgumentParser
-from operator import itemgetter, attrgetter
-
+import os, sys, re
 
 def command_line_parser():
     """command line passing arguments"""
     ap = ArgumentParser()
     ap.add_argument("-i", "--input", required=True, help="inputfile:  itcont.txt")
     ap.add_argument("-o", "--output", required=True, help="output file: top_cost_drug.txt")
-    #ap.add_argument('-i', '--input_file', nargs='?')
-    #ap.add_argument('-o', '--output_file', nargs='?')
     #print(args); inputfile = args["input"]; outputfile = args["output"];
     return vars(ap.parse_args())
-
 
 
 
@@ -23,22 +19,19 @@ def get_data_lines(input_filename):
     :param filename:
     :return:
     """
-
     try:
         with open(input_filename, 'r') as fobj:
             next(fobj)  #skip title line!
             lines = fobj.readlines()
         return lines
-
     except FileNotFoundError:
         print("Err! File with name = {}, Not Found!".format(input_filename))
         exit(0)
 
 
 def extract_drug_properties(lines):
-
     """
-        extract drug data from lines read
+    Extract drug data from lines read
     :param lines:
     :return:
     """
@@ -61,7 +54,6 @@ def extract_drug_properties(lines):
                 drug_prescriber_list.append(prescriber_name)
 
         return drug_name_list, drug_cost_list, drug_prescriber_list
-
     except Exception as e:
         print(e, type(e))
 
@@ -76,34 +68,27 @@ def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,un
     :param drug_costs:
     :return: Drug Name, Number of Prescribers, Total cost
     """
-
     '''
     ## Get list of unique Prescriber for each drug
     for item in drug_name_list:
         print('Drug Name = %s' %item)
-
     for item in drug_prescriber_list:
         print('Drug Prescriber = %s' %item)
-
     for item in drug_cost_list:
         print('Drug Cost = %s' %item)
     '''
-
     try:
-
         for drug, prescriber in zip(drug_name_list, drug_prescriber_list):
             #print('Drug = %s & Drug Prescriber = %s' % (drug, prescriber))
             if drug not in unique_prescriber_names:
                 unique_prescriber_names[drug] = set() # unique prescriber name
             unique_prescriber_names[drug].add(prescriber)
 
-
         for drug, cost in zip(drug_name_list, drug_cost_list):
             #print('Drug = %s & Drug Cost = %s' % (drug,cost))
             if drug not in drug_costs:
                 drug_costs[drug] = list() #multiple costs!
             drug_costs[drug].append(cost)
-
     except Exception as e:
         print(e, type(e))
 
@@ -122,26 +107,20 @@ def drug_counting(drug_costs, unique_drug_prescribers, drug_list, output_file):
     :param output_file:
     :return:
     """
-
     drugs_from_drug_costs = [key for key in drug_costs.keys()]
     drugs_from_unique_drug_prescribers = [key for key in unique_drug_prescribers.keys()]
-
     '''
     print("length of drug cost = {} & length of unique prescribers = {}\n"\
         .format(len(drugs_from_drug_costs),len(drugs_from_unique_drug_prescribers)))
-
     print("-----Drug Costs-----")
     for key, value in drug_costs.items():
         print("Key = {}, Value = {}".format(key, value))
     print("\n")
-
     print("-----Drug Prescribers------")
     for key, value in unique_drug_prescribers.items():
         print("Key = {}, Value = {}".format(key, value))
-
     print("\n")
     '''
-
     try:
         if len(drugs_from_drug_costs) == len(drugs_from_unique_drug_prescribers):
             for drug in drug_costs.keys():
@@ -149,14 +128,10 @@ def drug_counting(drug_costs, unique_drug_prescribers, drug_list, output_file):
                     total_drug_cost = get_sum(drug_costs[drug])
                     total_drug_cost = int(total_drug_cost)
                     prescriber_count = len(unique_drug_prescribers[drug])
-
-
                     drug_list.append(Drug(drug,prescriber_count,total_drug_cost))
         else:
             print("Alora! Houston! Siamo Problema! Unequal drugs keys length on cost and prescribers dicts!")
-
         write_output(output_file, sort_pharmacy_drugs(drug_list))
-
     except Exception as e:
         print(e, type(e))
         exit(0)
@@ -170,9 +145,6 @@ def sort_pharmacy_drugs(drug_list):
     :param drug_list:
     :return: sorted list
     """
-    #TO DO:
-    # -- Write output in DESCENDING drug PRICE
-    # -- If Same Price, in alphabet order of drug name!
     '''
        Do some optimization by not returning an entire list!
        might wanna call sort instead?
@@ -193,7 +165,6 @@ def  get_sum(cost_list):
         for cost in cost_list:
             total_cost += float(cost)
         return total_cost
-
     except Exception as e:
         print(e, type(e))
 
@@ -202,7 +173,6 @@ def  get_sum(cost_list):
 def write_output(output_filename, sorted_drug_list):
     """
      writes sorted drug list to output file
-
     :param sorted_drug_list:
     :param output_filename:
     :return:
@@ -219,7 +189,6 @@ def write_output(output_filename, sorted_drug_list):
         for drug in sorted_drug_list:
             fhandle.write(drug.drug_name + "," + str(drug.drug_count) + "," + str(drug.drug_cost) + "\n")
         fhandle.close()
-
     except FileExistsError:
         print("Err! Unable to write to file {}".format(output_filename))
         exit(0)
@@ -266,6 +235,7 @@ class Drug(object):
         :return:
         """
         return self.drug_cost, self.drug_name
+
 
 #---------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------#
