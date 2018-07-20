@@ -98,10 +98,12 @@ def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,un
             unique_prescriber_names[drug].add(prescriber)
 
 
+
+        ## Get list of drug cost for each drug
         for drug, cost in zip(drug_name_list, drug_cost_list):
             #print('Drug = %s & Drug Cost = %s' % (drug,cost))
             if drug not in drug_costs:
-                drug_costs[drug] = list() #multiple costs!
+                drug_costs[drug] = list() # multiple costs!
             drug_costs[drug].append(cost)
 
     except Exception as e:

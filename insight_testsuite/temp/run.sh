@@ -5,5 +5,3 @@
 #
 #
 python ./src/pharmacy_counting.py  -i ./input/itcont.txt  -o ./output/top_cost_drug.txt
-
-#python ./src/pharmacy_counting.py  -i ./itcont_sample.txt   -o ./output/top_cost_drug.txt
