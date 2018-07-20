@@ -1,7 +1,7 @@
 #!/user/bin/python
 
 from argparse import ArgumentParser
-import operator # sorting
+from operator import itemgetter, attrgetter
 
 
 def command_line_parser():
@@ -109,7 +109,7 @@ def compute_drug_outputs(drug_name_list, drug_cost_list, drug_prescriber_list,un
 
 
 
-def drug_counting(drug_costs, unique_drug_prescribers, pharmacy_dict, output_file):
+def drug_counting(drug_costs, unique_drug_prescribers, drug_list, output_file):
     """
         Takes drug_costs and uniqiue_drug_prescribers and computes:
             -- Total drugs
@@ -150,11 +150,12 @@ def drug_counting(drug_costs, unique_drug_prescribers, pharmacy_dict, output_fil
                     total_drug_cost = int(total_drug_cost)
                     prescriber_count = len(unique_drug_prescribers[drug])
 
-                    pharmacy_dict[drug] = (total_drug_cost, prescriber_count)
+
+                    drug_list.append(Drug(drug,prescriber_count,total_drug_cost))
         else:
             print("Alora! Houston! Siamo Problema! Unequal drugs keys length on cost and prescribers dicts!")
 
-        write_output(output_file, sort_pharmacy_drugs(pharmacy_dict))
+        write_output(output_file, sort_pharmacy_drugs(drug_list))
 
     except Exception as e:
         print(e, type(e))
@@ -162,17 +163,21 @@ def drug_counting(drug_costs, unique_drug_prescribers, pharmacy_dict, output_fil
 
 
 
-def sort_pharmacy_drugs(pharma_dict):
+def sort_pharmacy_drugs(drug_list):
     """
      Sort dictionary  by value in Descending order!
      if values are the same then sort by key(TO DO)
-    :param pharma_dict:
+    :param drug_list:
     :return: sorted list
     """
     #TO DO:
     # -- Write output in DESCENDING drug PRICE
     # -- If Same Price, in alphabet order of drug name!
-    return sorted(pharma_dict.items(), key=operator.itemgetter(0), reverse=True)
+    '''
+       Do some optimization by not returning an entire list!
+       might wanna call sort instead?
+    '''
+    return sorted(drug_list, key=lambda drug: drug.compare(), reverse=True)
 
 
 
@@ -204,20 +209,63 @@ def write_output(output_filename, sorted_drug_list):
     """
     try:
         '''
-        for value in sorted_drug_list:
-            #print(value)
-            print(value[0] + "," + str(value[1][1]) + "," + str(value[1][0]) + "\n")
+        for drug in sorted_drug_list:
+            #print(drug)
+            #print(value[0] + "," + str(value[1][1]) + "," + str(value[1][0]) + "\n")
+            print(drug.drug_name + "," + str(drug.drug_count) + "," + str(drug.drug_cost) + "\n")
         '''
         fhandle = open(output_filename, 'w')
-        fhandle.write("drug_name,num_prescriber,total_cost \n")
-        for value in sorted_drug_list:
-            fhandle.write(value[0] + "," + str(value[1][1]) + "," + str(value[1][0]) + "\n")
+        fhandle.write("drug_name,num_prescriber,total_cost\n")
+        for drug in sorted_drug_list:
+            fhandle.write(drug.drug_name + "," + str(drug.drug_count) + "," + str(drug.drug_cost) + "\n")
         fhandle.close()
 
     except FileExistsError:
         print("Err! Unable to write to file {}".format(output_filename))
         exit(0)
 
+
+
+class Drug(object):
+    """
+     Drug Blueprint
+    """
+    def __init__(self,name,count,cost):
+        self.drug_name = name
+        self.drug_count = count
+        self.drug_cost = cost
+
+    def __repr__(self):
+        return repr((self.drug_name, self.drug_count, self.drug_cost))
+
+    def __lt__(self,other):
+        if self.drug_cost < other.drug_cost:
+            return True
+        elif self.drug_cost == other.drug_cost:
+            if self.drug_name < other.drug_name:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def __gt__(self, other):
+        if self.drug_cost > other.drug_cost:
+            return True
+        elif self.drug_cost == other.drug_cost:
+            if self.drug_name > other.drug_name:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def compare(self):
+        """
+         Compare two Drugs in sorted list algorithm
+        :return:
+        """
+        return self.drug_cost, self.drug_name
 
 #---------------------------------------------------------------------------------------------------#
 #---------------------------------------------------------------------------------------------------#

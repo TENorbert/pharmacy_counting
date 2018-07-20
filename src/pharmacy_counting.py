@@ -18,7 +18,7 @@ def main():
 
         unique_prescriber_names = {}  # unique prescriber of a drug type
         drug_costs = {}  #list of costs for each drug
-        pharmacy_list = {}  #key is drug_name and value = (drug_cost, prescriber_count)
+        drug_list = []  #list of tuples (drug_name,prescriber_count,drug_cost, )
 
         '''
         #data = read_input_data(input_file)
@@ -40,7 +40,7 @@ def main():
                              drug_prescriber_list,\
                              unique_prescriber_names, drug_costs)
 
-        drug_counting(drug_costs, unique_prescriber_names, pharmacy_list, output_file)
+        drug_counting(drug_costs, unique_prescriber_names, drug_list, output_file)
 
 
     except Exception as e:
